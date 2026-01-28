@@ -38,7 +38,7 @@ def _iterdirs(path, size_min_in_mb=50):
 def main(path, size_min_in_mb):
     try:
         folder_info = _iterdirs(path, size_min_in_mb)
-        for folder in reversed(list(set(sorted(folder_info.items(), key=lambda x:x[1])))):
+        for folder in list(set(sorted(folder_info.items(), key=lambda x:x[1]))):
             folder_name, size = folder
             if float(size) >= 20.0:
                 print('{}: {:.1f}MB'.format(folder_name, size))
