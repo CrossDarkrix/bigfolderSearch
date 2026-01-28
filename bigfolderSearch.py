@@ -20,7 +20,7 @@ def _iterfiles(path, size_min_in_mb):
             yield 0
 
 def _iterdirs(path, size_min_in_mb=50):
-    _directory_info = {}
+    _directory = []
     def calc_total(path):
         total = 0
         for size in _iterfiles(path, size_min_in_mb):
@@ -30,17 +30,21 @@ def _iterdirs(path, size_min_in_mb=50):
         try:
             for directory in dirs:
                 folder = os.path.join(root, directory)
-                _directory_info[folder] = calc_total(folder)
+                _directory_info = {}
+                _directory_info["folder_name"] = folder
+                _directory_info["folder_size"] = calc_total(folder)
+                _directory.append(_directory_info)
         except:
             pass
 
-    return _directory_info
+    return _directory
 
 def main(path, size_min_in_mb):
     try:
         folder_info = _iterdirs(path, size_min_in_mb)
-        for folder in list(set(sorted(folder_info.items(), key=itemgetter(1), reverse=True))):
-            folder_name, size = folder
+        for folder in sorted(folder_info, key=itemgetter('folder_size'), reverse=True):
+            folder_name = folder["folder_name"]
+            size = folder["folder_size"]
             if float(size) >= 20.0:
                 print('{}: {:.1f}MB'.format(folder_name, size))
     except Exception as Err:
