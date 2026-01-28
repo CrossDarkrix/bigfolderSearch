@@ -41,6 +41,7 @@ def _iterdirs(path, size_min_in_mb=50):
 
 def main(path, size_min_in_mb):
     try:
+        print('please wait, folder searching.....')
         folder_info = _iterdirs(path, size_min_in_mb)
         for folder in sorted(folder_info, key=itemgetter('folder_size')):
             folder_name = folder["folder_name"]
