@@ -50,4 +50,8 @@ if __name__ == '__main__':
     if len(sys.argv) != 1 and len(sys.argv) != 0:
         main(sys.argv[1], 50)
     else:
-        main(input('Search PATH: ') or os.getcwd(), 50)
+        path = input('Search PATH: ')
+        if path != '':
+            main(path, 50)
+        else:
+            main(os.getcwd(), 50)
