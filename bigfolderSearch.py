@@ -9,13 +9,13 @@ def _iterfiles(path, size_min_in_mb):
                 p = Path(os.path.join(root, file))
                 try:
                     size = p.stat().st_size
-                except PermissionError:
+                except:
                     size = 0
                 if size >= size_min_in_mb:
                     yield size
                 else:
                     yield 0
-        except PermissionError:
+        except:
             yield 0
 
 def _iterdirs(path, size_min_in_mb=50):
@@ -30,7 +30,7 @@ def _iterdirs(path, size_min_in_mb=50):
             for directory in dirs:
                 folder = os.path.join(root, directory)
                 _directory_info[folder] = calc_total(folder)
-        except PermissionError:
+        except:
             pass
 
     return _directory_info
